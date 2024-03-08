@@ -28,20 +28,20 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new UnauthorizedException("Athorization Bearer token not found.");
-        } else {
-            String token = authHeader.substring(7);
-            jwtTools.verifyToken(token);
-            String id = jwtTools.extractIdFroToken(token);
-            User currentUser = userService.getById(Long.valueOf(id));
-
-            Authentication authentication = new UsernamePasswordAuthenticationToken(currentUser, null, currentUser.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            filterChain.doFilter(request, response);
-        }
+//        String authHeader = request.getHeader("Authorization");
+//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+//            throw new UnauthorizedException("Athorization Bearer token not found.");
+//        } else {
+//            String token = authHeader.substring(7);
+//            jwtTools.verifyToken(token);
+//            String id = jwtTools.extractIdFroToken(token);
+//            User currentUser = userService.getById(Long.valueOf(id));
+//
+//            Authentication authentication = new UsernamePasswordAuthenticationToken(currentUser, null, currentUser.getAuthorities());
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//            filterChain.doFilter(request, response);
+//        }
     }
 
     @Override
