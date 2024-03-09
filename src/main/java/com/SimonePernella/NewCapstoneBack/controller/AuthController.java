@@ -6,6 +6,7 @@ import com.SimonePernella.NewCapstoneBack.dto.UserSuccessLoginDTO;
 import com.SimonePernella.NewCapstoneBack.entities.User;
 import com.SimonePernella.NewCapstoneBack.exception.BadRequestException;
 import com.SimonePernella.NewCapstoneBack.service.AuthService;
+import com.SimonePernella.NewCapstoneBack.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -30,9 +31,11 @@ public class AuthController {
         if (validation.hasErrors()) {
             throw new BadRequestException("", validation.getAllErrors());
         } else {
-            return authService.save(body);
+            System.out.println(body);
+            User newUser = authService.save(body);
+            return newUser;
         }
+    }
     }
 
 
-}
