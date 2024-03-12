@@ -52,10 +52,10 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList(""));
-        configuration.setAllowedHeaders(Arrays.asList(""));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/", configuration); // Registro la configurazione CORS fatta su tutti gli endpoint della mia applicazione
+        source.registerCorsConfiguration("/**", configuration); // Registro la configurazione CORS fatta su tutti gli endpoint della mia applicazione
         return source;
     }
 }
