@@ -22,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public UserSuccessLoginDTO login(@RequestBody UserLoginDTO body) throws Exception {
-        return new UserSuccessLoginDTO(authService.authenticateUser(body));
+        return authService.authenticateUser(body);
     }
 
     @PostMapping("/register")

@@ -1,6 +1,7 @@
 package com.SimonePernella.NewCapstoneBack.entities;
 
 import com.SimonePernella.NewCapstoneBack.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,11 @@ public class User implements UserDetails {
     @CreationTimestamp
     @Column(name = "creation_date")
     private Date createdAt;
+    @OneToOne (mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
+    private Cart cart;
+    @Column(name = "stripe_customer_id")
+    private String stripeCustomerId;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(this.role.name()));

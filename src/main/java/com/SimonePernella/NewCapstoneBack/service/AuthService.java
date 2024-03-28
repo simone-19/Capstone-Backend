@@ -2,6 +2,7 @@ package com.SimonePernella.NewCapstoneBack.service;
 
 import com.SimonePernella.NewCapstoneBack.dto.UserDTO;
 import com.SimonePernella.NewCapstoneBack.dto.UserLoginDTO;
+import com.SimonePernella.NewCapstoneBack.dto.UserSuccessLoginDTO;
 import com.SimonePernella.NewCapstoneBack.dto.UserUpdateInfoDTO;
 import com.SimonePernella.NewCapstoneBack.entities.User;
 import com.SimonePernella.NewCapstoneBack.exception.BadRequestException;
@@ -22,13 +23,14 @@ public class AuthService {
     private JWTTools jwtTools;
     @Autowired
     private PasswordEncoder bcrypt;
-//    @Autowired
-//    private CartService cartService;
+    @Autowired
+    private CartService cartService;
 
-    public String authenticateUser(UserLoginDTO body) {
+    public UserSuccessLoginDTO authenticateUser(UserLoginDTO body) {
         User user = userService.findByEmail(body.email());
         if (bcrypt.matches(body.password(), user.getPassword())) {
-            return jwtTools.createToken(user);
+           UserSuccessLoginDTO usldto = new UserSuccessLoginDTO(jwtTools.createToken(user), user.getId());
+            return usldto;
         } else {
             throw new UnauthorizedException("Email or password invalid.");
         }
@@ -48,6 +50,9 @@ public class AuthService {
         user.setUsername(body.username());
         user.setAvatarUrl("https://ui-avatars.com/api/?name=" + body.name() + "+" + body.surname());
         userRepository.save(user);
+        cartService.createCart(user);
+
+
 //        Cart cart = cartService.createCart(user);
 //        user.setCart(cart);
 //        userRepository.save(user);
